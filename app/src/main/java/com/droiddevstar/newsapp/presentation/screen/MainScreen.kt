@@ -4,12 +4,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -17,12 +20,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.droiddevstar.newsapp.R
 import com.droiddevstar.newsapp.presentation.navigation.Screen
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
     onNavigate: (Screen) -> Unit
 ) {
+    val drawerState = rememberDrawerState(
+        initialValue = DrawerValue.Closed
+    )
+    val scope = rememberCoroutineScope()
+
     ModalNavigationDrawer(
+        drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
                 Text(
@@ -33,7 +43,14 @@ fun MainScreen(
                 NavigationDrawerItem(
                     label = { Text(text = stringResource(R.string.about)) },
                     selected = false,
-                    onClick = { onNavigate(Screen.About) }
+                    onClick = {
+                        scope.launch {
+                            drawerState.apply {
+                                close()
+                            }
+                        }
+                        onNavigate(Screen.About)
+                    }
                 )
             }
         }
@@ -52,19 +69,4 @@ fun MainScreen(
             )
         }
     }
-
-
-//    var myVal: String by remember {
-//        mutableStateOf("")
-//    }
-//
-//    Column(
-//        verticalArrangement = Arrangement.Center,
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        myVal = "asdf"
-//        Text(
-//            text = "Main screen"
-//        )
-//    }
 }

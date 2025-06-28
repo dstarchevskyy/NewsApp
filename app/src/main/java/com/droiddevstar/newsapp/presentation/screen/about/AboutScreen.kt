@@ -2,6 +2,7 @@ package com.droiddevstar.newsapp.presentation.screen.about
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,8 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.droiddevstar.newsapp.R
@@ -54,6 +55,20 @@ fun AboutScreen(
             contentDescription = "Dima photo",
             contentScale = ContentScale.FillWidth
         )
-    }
 
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(R.string.vk_title),
+                style = TextStyle(fontWeight = FontWeight.Bold)
+            )
+            Text(
+                text = stringResource(R.string.vk_id),
+                color = Color.Blue
+            )
+        }
+    }
 }

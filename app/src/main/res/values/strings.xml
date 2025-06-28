@@ -9,6 +9,8 @@
     <string name="enter_username">Enter user name</string>
     <string name="main_screen">Main Screen</string>
     <string name="about">About</string>
-    <string name="my_name">Starchevsky Dmitry</string>
+    <string name="my_name">Dmitry Starchevsky</string>
     <string name="android_developer">Android Developer</string>
+    <string name="vk_title">VK:&#160;</string>
+    <string name="vk_id">https://vk.com/id27741388</string>
 </resources>
