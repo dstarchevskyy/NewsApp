@@ -1,6 +1,11 @@
 package com.droiddevstar.newsapp.presentation.screen.about
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -21,10 +27,32 @@ import androidx.compose.ui.unit.sp
 import com.droiddevstar.newsapp.R
 import com.droiddevstar.newsapp.presentation.navigation.Screen
 
+fun openTelegramOrBrowser(context: Context) {
+
+
+    val telegramIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/dimastarchevsky"))
+
+    // Check if Telegram is installed
+    val packageManager = context.packageManager
+    val isTelegramInstalled = telegramIntent.resolveActivity(packageManager) != null
+
+    if (isTelegramInstalled) {
+        context.startActivity(telegramIntent)
+    } else {
+        // Fallback to browser
+        val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/dimastarchevsky"))
+        context.startActivity(webIntent)
+    }
+}
+
+
 @Composable
 fun AboutScreen(
     onNavigate: (Screen) -> Unit
 ) {
+    val context = LocalContext.current
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,7 +86,25 @@ fun AboutScreen(
 
         Row(modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 16.dp),
+            .padding(all = 16.dp)
+            .clickable {
+                openTelegramOrBrowser(context)
+            },
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = stringResource(R.string.telegram_title),
+                style = TextStyle(fontWeight = FontWeight.Bold)
+            )
+            Text(
+                text = stringResource(R.string.telegram_id),
+                color = Color.Blue
+            )
+        }
+
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
