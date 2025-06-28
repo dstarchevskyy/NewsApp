@@ -25,4 +25,19 @@ class AboutViewModel @Inject constructor(): ViewModel() {
         }
     }
 
+    fun openVkOrBrowser(context: Context) {
+        val telegramIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/id27741388"))
+
+        val packageManager = context.packageManager
+        val isTelegramInstalled = telegramIntent.resolveActivity(packageManager) != null
+
+        if (isTelegramInstalled) {
+            context.startActivity(telegramIntent)
+        } else {
+            // Fallback to browser
+            val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/id27741388"))
+            context.startActivity(webIntent)
+        }
+    }
+
 }

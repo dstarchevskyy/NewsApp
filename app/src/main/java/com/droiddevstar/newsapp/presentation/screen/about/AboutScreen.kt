@@ -83,7 +83,10 @@ fun AboutScreen(
 
         Row(modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 16.dp)
+            .clickable {
+                viewModel.openVkOrBrowser(context)
+            },
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
