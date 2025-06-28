@@ -33,7 +33,7 @@ fun MainScreen(
                 NavigationDrawerItem(
                     label = { Text(text = stringResource(R.string.about)) },
                     selected = false,
-                    onClick = { /*TODO*/ }
+                    onClick = { onNavigate(Screen.About) }
                 )
             }
         }
