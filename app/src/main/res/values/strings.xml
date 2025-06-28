@@ -9,4 +9,6 @@
     <string name="enter_username">Enter user name</string>
     <string name="main_screen">Main Screen</string>
     <string name="about">About</string>
+    <string name="my_name">Starchevsky Dmitry</string>
+    <string name="android_developer">Android Developer</string>
 </resources>
