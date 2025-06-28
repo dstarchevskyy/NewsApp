@@ -1,11 +1,8 @@
 package com.droiddevstar.newsapp.presentation.screen.about
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,34 +21,16 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.droiddevstar.newsapp.R
 import com.droiddevstar.newsapp.presentation.navigation.Screen
-
-fun openTelegramOrBrowser(context: Context) {
-
-
-    val telegramIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/dimastarchevsky"))
-
-    // Check if Telegram is installed
-    val packageManager = context.packageManager
-    val isTelegramInstalled = telegramIntent.resolveActivity(packageManager) != null
-
-    if (isTelegramInstalled) {
-        context.startActivity(telegramIntent)
-    } else {
-        // Fallback to browser
-        val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/dimastarchevsky"))
-        context.startActivity(webIntent)
-    }
-}
-
 
 @Composable
 fun AboutScreen(
     onNavigate: (Screen) -> Unit
 ) {
-    val context = LocalContext.current
-
+    val viewModel: AboutViewModel = hiltViewModel<AboutViewModel>()
+    val context: Context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -88,7 +67,7 @@ fun AboutScreen(
             .fillMaxWidth()
             .padding(all = 16.dp)
             .clickable {
-                openTelegramOrBrowser(context)
+                viewModel.openTelegramOrBrowser(context)
             },
             verticalAlignment = Alignment.CenterVertically,
         ) {

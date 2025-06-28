@@ -42,7 +42,6 @@ fun LoginScreen(
     onNavigate: (Screen) -> Unit
 ) {
     val viewModel: LoginScreenViewModel = hiltViewModel<LoginScreenViewModel>()
-
     val context: Context = LocalContext.current
 
     LaunchedEffect(viewModel.state.loginResult) {
