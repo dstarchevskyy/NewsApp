@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.droiddevstar.newsapp.R
 import com.droiddevstar.newsapp.presentation.navigation.Screen
+import com.droiddevstar.newsapp.presentation.ui.component.StyledButton
 
 @Composable
 fun AboutScreen(
@@ -96,6 +97,17 @@ fun AboutScreen(
             Text(
                 text = stringResource(R.string.vk_id),
                 color = Color.Blue
+            )
+        }
+
+        StyledButton(
+            onClick = {
+                onNavigate(Screen.Main)
+            },
+            modifier = Modifier.padding(top = 100.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.close)
             )
         }
     }
