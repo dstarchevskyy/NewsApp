@@ -52,6 +52,20 @@ fun MainScreen(
                         onNavigate(Screen.About)
                     }
                 )
+
+                NavigationDrawerItem(
+                    label = { Text(text = stringResource(R.string.funny_jokes)) },
+                    selected = false,
+                    onClick = {
+                        scope.launch {
+                            drawerState.apply {
+                                close()
+                            }
+                        }
+                        onNavigate(Screen.FunnyJokes)
+                    }
+                )
+
             }
         }
     ) {
