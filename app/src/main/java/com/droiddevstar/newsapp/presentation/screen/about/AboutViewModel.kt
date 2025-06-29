@@ -3,12 +3,29 @@ package com.droiddevstar.newsapp.presentation.screen.about
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AboutViewModel @Inject constructor(): ViewModel() {
+    var state: Boolean by mutableStateOf(false)
+        private set
+
+    fun addMem() {
+        viewModelScope.launch {
+            state = true
+            delay(3_000)
+            state = false
+        }
+    }
+
     fun openTelegramOrBrowser(context: Context) {
         val telegramIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/dimastarchevsky"))
 
@@ -39,5 +56,4 @@ class AboutViewModel @Inject constructor(): ViewModel() {
             context.startActivity(webIntent)
         }
     }
-
 }

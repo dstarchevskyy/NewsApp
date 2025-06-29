@@ -1,6 +1,10 @@
 package com.droiddevstar.newsapp.presentation.screen.about
 
 import android.content.Context
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -71,7 +75,17 @@ fun AboutScreen(
                 contentScale = ContentScale.FillWidth
             )
 
-            BalabanovView()
+            this@Column.AnimatedVisibility(
+                visible = viewModel.state,
+                enter = fadeIn(
+                    animationSpec = tween(delayMillis = 2_000)
+                ),
+                exit = fadeOut(
+                    animationSpec = tween(delayMillis = 2_000)
+                )
+            ) {
+                BalabanovView()
+            }
         }
 
         Row(modifier = Modifier
@@ -112,9 +126,21 @@ fun AboutScreen(
 
         StyledButton(
             onClick = {
-                onNavigate(Screen.Main)
+                viewModel.addMem()
             },
             modifier = Modifier.padding(top = 100.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.add_mem)
+            )
+        }
+
+
+        StyledButton(
+            onClick = {
+                onNavigate(Screen.Main)
+            },
+            modifier = Modifier.padding(top = 16.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.close)
