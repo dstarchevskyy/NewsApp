@@ -2,6 +2,7 @@ package com.droiddevstar.newsapp.presentation.screen.about
 
 import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -16,8 +17,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -75,6 +78,15 @@ fun AboutScreen(
                 contentScale = ContentScale.FillWidth
             )
 
+            val alpha by animateFloatAsState(
+                targetValue = if (viewModel.state) {
+                    1f
+                } else {
+                    0f
+                },
+                animationSpec = tween(durationMillis = 1_000)
+            )
+
             this@Column.AnimatedVisibility(
                 visible = viewModel.state,
                 enter = fadeIn(
@@ -84,7 +96,10 @@ fun AboutScreen(
                     animationSpec = tween(delayMillis = 2_000)
                 )
             ) {
-                BalabanovView()
+                BalabanovView(
+                    modifier = Modifier.fillMaxWidth()
+                        .alpha(alpha)
+                )
             }
         }
 

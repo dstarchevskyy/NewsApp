@@ -22,9 +22,10 @@ import com.droiddevstar.newsapp.R
 
 @Composable
 fun BalabanovView(
+    modifier: Modifier
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ){
@@ -62,5 +63,7 @@ fun BalabanovView(
 @Preview(showBackground = true)
 @Composable
 fun BalabanovViewPreview() {
-    BalabanovView()
+    BalabanovView(
+        modifier = Modifier.fillMaxWidth()
+    )
 }
