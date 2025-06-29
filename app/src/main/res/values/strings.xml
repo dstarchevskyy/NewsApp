@@ -16,4 +16,6 @@
     <string name="telegram_title">Telegram:&#160;</string>
     <string name="telegram_id">\@DimaStarchevsky</string>
     <string name="close">Close</string>
+    <string name="director">Режиссер:</string>
+    <string name="balabanov">Алексей\nБалабанов</string>
 </resources>
