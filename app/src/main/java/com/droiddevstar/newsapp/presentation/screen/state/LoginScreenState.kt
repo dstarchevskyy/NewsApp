@@ -9,7 +9,7 @@ sealed class LoginScreenEvent {
 }
 
 data class LoginScreenState(
-    val email: String = "",
-    val password: String = "",
+    val email: String = "asdf",
+    val password: String = "asdf",
     val loginResult: Result? = null
 )

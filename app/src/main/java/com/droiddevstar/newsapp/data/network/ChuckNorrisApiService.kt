@@ -1,5 +1,6 @@
 package com.droiddevstar.newsapp.data.network
 
+import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,8 +22,9 @@ interface ChuckNorrisApiService {
     companion object {
         private const val BASE_URL = "https://api.chucknorris.io/"
 
-        fun create(): ChuckNorrisApiService {
-            val retrofit = Retrofit.Builder()
+        fun create(okHttpClient: OkHttpClient): ChuckNorrisApiService {
+            val retrofit: Retrofit = Retrofit.Builder()
+                .client(okHttpClient)
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

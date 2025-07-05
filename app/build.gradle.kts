@@ -78,5 +78,7 @@ dependencies {
     implementation(libs.retrofit.converterJson)
     implementation(libs.okhttp)
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    implementation(libs.chucker)
 }
