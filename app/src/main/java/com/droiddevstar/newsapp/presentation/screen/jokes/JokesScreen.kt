@@ -17,12 +17,9 @@ import com.droiddevstar.newsapp.R
 fun JokesScreen() {
     val viewModel: JokeViewModel = hiltViewModel<JokeViewModel>()
 
-    LaunchedEffect(true) {
-        viewModel.getRandomJoke()
-
-        viewModel.getJokeByCategory("asdf")
-
-    }
+//    LaunchedEffect(true) {
+//        viewModel.getJokeByCategories()
+//    }
 
     Text(
         text = stringResource(

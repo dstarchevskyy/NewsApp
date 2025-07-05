@@ -46,7 +46,7 @@ class LoginScreenViewModel @Inject constructor(
             email = email,
             password = password
         )
-        println("@@@result: $result")
+
         this@LoginScreenViewModel.state = state.copy(loginResult = result)
     }
 }

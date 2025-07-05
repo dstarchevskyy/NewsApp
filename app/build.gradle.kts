@@ -77,6 +77,7 @@ dependencies {
     implementation(libs.bundles.retrofit)
     implementation(libs.retrofit.converterJson)
     implementation(libs.okhttp)
+    implementation(libs.okhttp.logger)
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
