@@ -9,7 +9,8 @@ import com.droiddevstar.newsapp.presentation.screen.LoginScreen
 import com.droiddevstar.newsapp.presentation.screen.MainScreen
 import com.droiddevstar.newsapp.presentation.screen.RegisterScreen
 import com.droiddevstar.newsapp.presentation.screen.about.AboutScreen
-import com.droiddevstar.newsapp.presentation.screen.jokes.JokesScreen
+import com.droiddevstar.newsapp.presentation.screen.jokes.JokeCategoriesScreen
+import com.droiddevstar.newsapp.presentation.screen.jokes.JokesListScreen
 import kotlinx.serialization.Serializable
 
 sealed class Screen {
@@ -22,7 +23,10 @@ sealed class Screen {
     @Serializable
     data object About: Screen()
     @Serializable
-    data object FunnyJokes: Screen()
+    data object FunnyJokesCategories: Screen()
+
+    @Serializable
+    data object FunnyJokesList: Screen()
 }
 
 @Composable
@@ -35,8 +39,19 @@ fun MainNav(
         navController = navHostController,
         startDestination = Screen.Login
     ) {
-        composable<Screen.FunnyJokes> {
-            JokesScreen()
+        composable<Screen.FunnyJokesCategories> {
+            JokeCategoriesScreen(
+                onNavigate = { navigateTo ->
+                    navHostController.navigate(navigateTo)
+                }
+            )
+        }
+        composable<Screen.FunnyJokesList> {
+            JokesListScreen(
+//                onNavigate = { navigateTo ->
+//                    navHostController.navigate(navigateTo)
+//                }
+            )
         }
         composable<Screen.About> {
             AboutScreen(

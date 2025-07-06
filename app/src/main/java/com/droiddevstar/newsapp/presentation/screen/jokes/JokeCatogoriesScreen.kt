@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -19,9 +18,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.droiddevstar.newsapp.R
+import com.droiddevstar.newsapp.presentation.navigation.Screen
 
 @Composable
-fun JokesScreen() {
+fun JokeCategoriesScreen(
+    onNavigate: (Screen) -> Unit
+) {
     val viewModel: JokeViewModel = hiltViewModel<JokeViewModel>()
 
     val onCategoryClick: (String) -> Unit = { category ->
@@ -52,6 +54,7 @@ fun JokesScreen() {
                     modifier = Modifier.padding(16.dp)
                         .clickable {
                             onCategoryClick(category)
+                            onNavigate(Screen.FunnyJokesList)
                         }
                 )
             }

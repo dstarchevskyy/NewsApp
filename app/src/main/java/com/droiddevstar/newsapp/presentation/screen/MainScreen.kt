@@ -62,7 +62,7 @@ fun MainScreen(
                                 close()
                             }
                         }
-                        onNavigate(Screen.FunnyJokes)
+                        onNavigate(Screen.FunnyJokesCategories)
                     }
                 )
 
