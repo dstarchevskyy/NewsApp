@@ -1,9 +1,12 @@
 package com.droiddevstar.newsapp.presentation.screen.jokes
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +24,10 @@ import com.droiddevstar.newsapp.R
 fun JokesScreen() {
     val viewModel: JokeViewModel = hiltViewModel<JokeViewModel>()
 
+    val onCategoryClick: (String) -> Unit = { category ->
+        viewModel.onCategoryClick(category = category)
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
             text = stringResource(
@@ -34,9 +41,20 @@ fun JokesScreen() {
 
         val categoriesState: State<List<String>> = viewModel.categoriesFlow.collectAsState()
 
-        Text(
-            text = categoriesState.value.toString(),
-            modifier = Modifier.fillMaxWidth()
-        )
+        LazyColumn(Modifier
+            .fillMaxWidth()
+            .padding(all = 16.dp)
+        ) {
+            items(categoriesState.value) { category ->
+                Text(
+                    text = category,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(16.dp)
+                        .clickable {
+                            onCategoryClick(category)
+                        }
+                )
+            }
+        }
     }
 }

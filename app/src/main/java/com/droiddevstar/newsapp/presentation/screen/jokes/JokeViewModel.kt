@@ -35,4 +35,8 @@ class JokeViewModel @Inject constructor(
             }
         }
     }
+
+    fun onCategoryClick(category: String) {
+        println("@@@onCategoryClick: $category")
+    }
 }
