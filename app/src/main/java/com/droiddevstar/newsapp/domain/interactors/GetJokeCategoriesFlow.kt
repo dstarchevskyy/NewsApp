@@ -1,12 +1,14 @@
 package com.droiddevstar.newsapp.domain.interactors
 
 import com.droiddevstar.newsapp.domain.jokes_repository.JokesRepository
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
-class GetJokesCategories @Inject constructor(
+class GetJokeCategoriesFlow @Inject constructor(
     private val jokesRepository: JokesRepository
 ) {
-    operator fun invoke() {
-        jokesRepository.getJokesCategories()
+
+    operator fun invoke(): StateFlow<List<String>> {
+        return jokesRepository.getJokesCategoriesFlow()
     }
 }

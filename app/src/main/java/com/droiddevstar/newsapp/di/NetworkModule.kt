@@ -11,6 +11,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -21,7 +23,12 @@ object NetworkModule {
     fun provideChuckNorrisApiService(
         okHttpClient: OkHttpClient
     ): ChuckNorrisApiService {
-        return ChuckNorrisApiService.create(okHttpClient)
+        val retrofit: Retrofit = Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        return retrofit.create(ChuckNorrisApiService::class.java)
     }
 
     @Provides
@@ -40,3 +47,5 @@ object NetworkModule {
             .build()
     }
 }
+
+private const val BASE_URL = "https://api.chucknorris.io/"

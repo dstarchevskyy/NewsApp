@@ -1,13 +1,14 @@
 package com.droiddevstar.newsapp.presentation.screen.jokes
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.droiddevstar.newsapp.data.network.ChuckNorrisApiService
 import com.droiddevstar.newsapp.data.network.JokeDTO
-import com.droiddevstar.newsapp.domain.interactors.GetJokesCategories
+import com.droiddevstar.newsapp.domain.interactors.GetJokeCategoriesFlow
+import com.droiddevstar.newsapp.domain.interactors.LoadJokesCategories
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import javax.inject.Inject
@@ -15,47 +16,23 @@ import javax.inject.Inject
 @HiltViewModel
 class JokeViewModel @Inject constructor(
     private val jokesApi: ChuckNorrisApiService,
-    private val getJokesCategories: GetJokesCategories
+    private val getJokeCategoriesFlow: GetJokeCategoriesFlow,
+    loadJokesCategories: LoadJokesCategories
 ): ViewModel() {
-    private val _joke = mutableStateOf<JokeDTO?>(null)
-    val joke: State<JokeDTO?> = _joke
 
-    private val _categories = mutableStateOf<List<String>>(emptyList())
-    val categories: State<List<String>> = _categories
-
-    private val _isLoading = mutableStateOf(false)
-    val isLoading: State<Boolean> = _isLoading
-
-    private val _error = mutableStateOf<String?>(null)
-    val error: State<String?> = _error
+    private val _categoriesFlow: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
+    val categoriesFlow = _categoriesFlow.asStateFlow()
 
     init {
-        getJokesCategories()
+        loadJokesCategories()
+        collectJokeCategories()
     }
 
-    fun getRandomJoke() {
+    private fun collectJokeCategories() {
         viewModelScope.launch {
-            _isLoading.value = true
-            try {
-                val response: Response<JokeDTO> = jokesApi.getRandomJoke()
-                if (response.isSuccessful) {
-                    _joke.value = response.body()
-                    _error.value = null
-                } else {
-                    _error.value = "Error: ${response.code()}"
-                }
-            } catch (e: Exception) {
-                _error.value = "Exception: ${e.message}"
-            } finally {
-                _isLoading.value = false
+            getJokeCategoriesFlow().collect {
+                _categoriesFlow.value = it
             }
-        }
-    }
-
-    fun getJokeByCategories() {
-        viewModelScope.launch {
-            _isLoading.value = true
-            getJokesCategories()
         }
     }
 }
