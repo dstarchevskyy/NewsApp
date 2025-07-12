@@ -1,11 +1,13 @@
 package com.droiddevstar.newsapp.data.repository.jokes
 
 import com.droiddevstar.newsapp.data.network.ChuckNorrisApiService
+import com.droiddevstar.newsapp.data.network.JokeDTO
 import com.droiddevstar.newsapp.domain.jokes_repository.JokesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 class JokesRepositoryImpl @Inject constructor(
@@ -15,9 +17,19 @@ class JokesRepositoryImpl @Inject constructor(
     override fun loadJokesCategories() {
         CoroutineScope(Dispatchers.IO).launch {
             val jokeCategories: List<String> = chuckNorrisApiService.getCategories()
-            println("@@@jokeCategories: ${jokeCategories}")
 
             saveJokesCategories(categories = jokeCategories)
+        }
+    }
+
+    override fun loadJokesBySelectedCategory() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val selectedCategory: String = JokesCache.getSelectedJokeCategoryFlow().value ?: return@launch
+            val response: Response<JokeDTO> = chuckNorrisApiService.getRandomJokeByCategory(
+                category = selectedCategory
+            )
+
+            println("@@@response")
         }
     }
 
@@ -27,5 +39,13 @@ class JokesRepositoryImpl @Inject constructor(
 
     override fun getJokesCategoriesFlow(): StateFlow<List<String>> {
         return JokesCache.getJokeCategoriesFlow()
+    }
+
+    override fun saveSelectedJokeCategory(category: String) {
+        JokesCache.saveJokeCategories(category = category)
+    }
+
+    override fun getSelectedJokeCategoryFlow(): StateFlow<String?> {
+        return JokesCache.getSelectedJokeCategoryFlow()
     }
 }

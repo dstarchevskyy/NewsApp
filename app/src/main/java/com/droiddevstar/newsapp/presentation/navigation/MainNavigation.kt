@@ -9,8 +9,8 @@ import com.droiddevstar.newsapp.presentation.screen.LoginScreen
 import com.droiddevstar.newsapp.presentation.screen.MainScreen
 import com.droiddevstar.newsapp.presentation.screen.RegisterScreen
 import com.droiddevstar.newsapp.presentation.screen.about.AboutScreen
-import com.droiddevstar.newsapp.presentation.screen.jokes.JokeCategoriesScreen
-import com.droiddevstar.newsapp.presentation.screen.jokes.JokesListScreen
+import com.droiddevstar.newsapp.presentation.screen.joke_categories.JokeCategoriesScreen
+import com.droiddevstar.newsapp.presentation.screen.jokes_list.JokesListScreen
 import kotlinx.serialization.Serializable
 
 sealed class Screen {
@@ -48,9 +48,6 @@ fun MainNav(
         }
         composable<Screen.FunnyJokesList> {
             JokesListScreen(
-//                onNavigate = { navigateTo ->
-//                    navHostController.navigate(navigateTo)
-//                }
             )
         }
         composable<Screen.About> {

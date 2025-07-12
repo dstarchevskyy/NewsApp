@@ -1,4 +1,4 @@
-package com.droiddevstar.newsapp.presentation.screen.jokes
+package com.droiddevstar.newsapp.presentation.screen.joke_categories
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -24,7 +24,7 @@ import com.droiddevstar.newsapp.presentation.navigation.Screen
 fun JokeCategoriesScreen(
     onNavigate: (Screen) -> Unit
 ) {
-    val viewModel: JokeViewModel = hiltViewModel<JokeViewModel>()
+    val viewModel: JokeCategoriesViewModel = hiltViewModel<JokeCategoriesViewModel>()
 
     val onCategoryClick: (String) -> Unit = { category ->
         viewModel.onCategoryClick(category = category)
