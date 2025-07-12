@@ -1,6 +1,5 @@
 package com.droiddevstar.newsapp.presentation.screen.jokes_list
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,8 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.droiddevstar.newsapp.R
-import com.droiddevstar.newsapp.presentation.navigation.Screen
-import com.droiddevstar.newsapp.presentation.screen.joke_categories.JokeCategoriesViewModel
 
 @Composable
 fun JokesListScreen() {
