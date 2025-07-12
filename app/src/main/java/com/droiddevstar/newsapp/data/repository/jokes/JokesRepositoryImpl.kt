@@ -25,11 +25,12 @@ class JokesRepositoryImpl @Inject constructor(
     override fun loadJokesBySelectedCategory() {
         CoroutineScope(Dispatchers.IO).launch {
             val selectedCategory: String = JokesCache.getSelectedJokeCategoryFlow().value ?: return@launch
-            val response: Response<JokeDTO> = chuckNorrisApiService.getRandomJokeByCategory(
+            val jokeDTO: JokeDTO? = chuckNorrisApiService.getRandomJokeByCategory(
                 category = selectedCategory
             )
 
-            println("@@@response")
+            JokesCache.saveLoadedJoke(jokeText = jokeDTO?.value ?: return@launch)
+            println("@@@response: $jokeDTO")
         }
     }
 
@@ -47,5 +48,9 @@ class JokesRepositoryImpl @Inject constructor(
 
     override fun getSelectedJokeCategoryFlow(): StateFlow<String?> {
         return JokesCache.getSelectedJokeCategoryFlow()
+    }
+
+    override fun getSavedJokesFlow(): StateFlow<List<String>> {
+        return JokesCache.getSavedJokesFlow()
     }
 }

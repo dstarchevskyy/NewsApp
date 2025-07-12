@@ -2,7 +2,6 @@ package com.droiddevstar.newsapp.data.network
 
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ChuckNorrisApiService {
@@ -12,7 +11,7 @@ interface ChuckNorrisApiService {
     @GET("jokes/random?")
     suspend fun getRandomJokeByCategory(
         @Query("category") category: String
-    ): Response<JokeDTO>
+    ): JokeDTO?
 
     @GET("jokes/categories")
     suspend fun getCategories(): List<String>

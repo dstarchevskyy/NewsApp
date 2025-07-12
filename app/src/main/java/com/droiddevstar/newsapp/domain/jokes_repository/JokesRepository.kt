@@ -11,4 +11,6 @@ interface JokesRepository {
 
     fun saveSelectedJokeCategory(category: String)
     fun getSelectedJokeCategoryFlow(): StateFlow<String?>
+
+    fun getSavedJokesFlow(): StateFlow<List<String>>
 }
