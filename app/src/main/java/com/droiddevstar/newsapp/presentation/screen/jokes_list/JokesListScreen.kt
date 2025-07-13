@@ -1,9 +1,12 @@
 package com.droiddevstar.newsapp.presentation.screen.jokes_list
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,33 +28,39 @@ fun JokesListScreen() {
         viewModel.loadJokes()
     }
 
-    Text(
-        text = stringResource(
-            id = R.string.funny_jokes_list
-        ),
-        textAlign = TextAlign.Center,
-        fontSize = 30.sp,
-        modifier = Modifier.fillMaxWidth()
-            .padding(top = 20.dp)
-    )
-
-    val jokesState: State<List<String>> = viewModel.jokesFlow.collectAsState()
-
-    LazyColumn(Modifier
-        .fillMaxWidth()
-        .padding(
-            top = 40.dp,
-            bottom = 16.dp,
-            start = 16.dp,
-            end = 16.dp
+    Column {
+        Text(
+            text = stringResource(
+                id = R.string.funny_jokes_list
+            ),
+            textAlign = TextAlign.Center,
+            fontSize = 30.sp,
+            modifier = Modifier.fillMaxWidth()
+                .padding(top = 32.dp)
         )
-    ) {
-        items(jokesState.value) { category ->
-            Text(
-                text = category,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(16.dp)
-            )
+
+        val jokesState: State<List<String>> = viewModel.jokesFlow.collectAsState()
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    top = 32.dp,
+                    bottom = 16.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                ),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(jokesState.value) { category ->
+                Card(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        text = category,
+                        fontSize = 20.sp,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+            }
         }
     }
 }

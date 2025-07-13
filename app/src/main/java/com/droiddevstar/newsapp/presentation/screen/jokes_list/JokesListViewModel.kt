@@ -19,7 +19,6 @@ class JokesListViewModel @Inject constructor(
     val jokesFlow = _jokesFlow.asStateFlow()
 
     init {
-        loadJokes()
         collectSavedJokes()
     }
 
