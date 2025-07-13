@@ -33,7 +33,7 @@ import com.droiddevstar.newsapp.util.Result
 
 @Composable
 fun RegisterScreen(
-    onNavigate: (Screen) -> Unit
+//    onNavigate: (Screen) -> Unit
 ) {
     val viewModel: RegisterViewModel = hiltViewModel<RegisterViewModel>()
 
@@ -43,7 +43,7 @@ fun RegisterScreen(
         viewModel.state.registerResult?.let { registerResult ->
             when (registerResult) {
                 is Result.Success<*> -> {
-                    onNavigate(Screen.Main)
+//                    onNavigate(Screen.Main)
                 }
                 is Result.Failure<*> -> {
                     Toast.makeText(
@@ -61,7 +61,7 @@ fun RegisterScreen(
         viewModel.state.registerResult?.let { registerResult ->
             when (registerResult) {
                 is Result.Success<*> -> {
-                    onNavigate(Screen.Main)
+//                    onNavigate(Screen.Main)
                 }
 
                 is Result.Failure<*> -> {
@@ -76,7 +76,7 @@ fun RegisterScreen(
     RegisterView(
         state = viewModel.state,
         onEvent = viewModel::onEvent,
-        onNavigate = onNavigate
+//        onNavigate = onNavigate
     )
 }
 
@@ -84,7 +84,7 @@ fun RegisterScreen(
 fun RegisterView(
     state: RegisterScreenState = RegisterScreenState(),
     onEvent: (RegisterScreenEvent) -> Unit = {},
-    onNavigate: (Screen) -> Unit = {}
+//    onNavigate: (Screen) -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -170,7 +170,7 @@ fun RegisterView(
             modifier = Modifier
                 .padding(top = 20.dp)
                 .clickable {
-                    onNavigate(Screen.Login)
+//                    onNavigate(Screen.Login)
                 }
         )
     }

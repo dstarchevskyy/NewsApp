@@ -37,7 +37,7 @@ import com.droiddevstar.newsapp.presentation.ui.component.StyledButton
 
 @Composable
 fun AboutScreen(
-    onNavigate: (Screen) -> Unit
+//    onNavigate: (Screen) -> Unit
 ) {
     val viewModel: AboutViewModel = hiltViewModel<AboutViewModel>()
     val context: Context = LocalContext.current
@@ -153,7 +153,7 @@ fun AboutScreen(
 
         StyledButton(
             onClick = {
-                onNavigate(Screen.Main)
+//                onNavigate(Screen.Main)
             },
             modifier = Modifier.padding(top = 16.dp)
         ) {

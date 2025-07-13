@@ -22,7 +22,7 @@ import com.droiddevstar.newsapp.presentation.navigation.Screen
 
 @Composable
 fun JokeCategoriesScreen(
-    onNavigate: (Screen) -> Unit
+//    onNavigate: (Screen) -> Unit
 ) {
     val viewModel: JokeCategoriesViewModel = hiltViewModel<JokeCategoriesViewModel>()
 
@@ -54,7 +54,7 @@ fun JokeCategoriesScreen(
                     modifier = Modifier.padding(16.dp)
                         .clickable {
                             onCategoryClick(category)
-                            onNavigate(Screen.FunnyJokesList)
+//                            onNavigate(Screen.FunnyJokesList)
                         }
                 )
             }

@@ -6,6 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.droiddevstar.newsapp.data.repository.AuthRepository
+import com.droiddevstar.newsapp.domain.interactors.navigation.SendNavigationCommand
+import com.droiddevstar.newsapp.presentation.navigation.NavigationViewModel
+import com.droiddevstar.newsapp.presentation.navigation.Screen
 import com.droiddevstar.newsapp.presentation.screen.state.LoginScreenEvent
 import com.droiddevstar.newsapp.presentation.screen.state.LoginScreenState
 import com.droiddevstar.newsapp.util.Result
@@ -16,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val sendNavigationCommand: SendNavigationCommand
 ): ViewModel() {
     var state: LoginScreenState by mutableStateOf(LoginScreenState())
         private set
@@ -48,5 +52,13 @@ class LoginScreenViewModel @Inject constructor(
         )
 
         this@LoginScreenViewModel.state = state.copy(loginResult = result)
+
+        if (result is Result.Success<*>) {
+            sendNavigationCommand(Screen.Main)
+        }
+    }
+
+    fun onRegisterClick() {
+        sendNavigationCommand(Screen.Register)
     }
 }

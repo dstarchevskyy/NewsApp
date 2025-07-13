@@ -1,18 +1,21 @@
 package com.droiddevstar.newsapp.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.droiddevstar.newsapp.presentation.screen.LoginScreen
-import com.droiddevstar.newsapp.presentation.screen.MainScreen
+import com.droiddevstar.newsapp.presentation.screen.main_screen.MainScreen
 import com.droiddevstar.newsapp.presentation.screen.RegisterScreen
 import com.droiddevstar.newsapp.presentation.screen.about.AboutScreen
 import com.droiddevstar.newsapp.presentation.screen.joke_categories.JokeCategoriesScreen
 import com.droiddevstar.newsapp.presentation.screen.jokes_list.JokesListScreen
 import kotlinx.serialization.Serializable
 
+@Serializable
 sealed class Screen {
     @Serializable
     data object Login: Screen()
@@ -24,7 +27,6 @@ sealed class Screen {
     data object About: Screen()
     @Serializable
     data object FunnyJokesCategories: Screen()
-
     @Serializable
     data object FunnyJokesList: Screen()
 }
@@ -32,8 +34,19 @@ sealed class Screen {
 @Composable
 fun MainNav(
     modifier: Modifier = Modifier,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    navigationViewModel: NavigationViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(
+        navigationViewModel
+    ) {
+        navigationViewModel.navigationCommandsFlow.collect { screen ->
+            navHostController.navigate(screen) {
+                launchSingleTop = true
+            }
+        }
+    }
+
     NavHost(
         modifier = modifier,
         navController = navHostController,
@@ -41,9 +54,9 @@ fun MainNav(
     ) {
         composable<Screen.FunnyJokesCategories> {
             JokeCategoriesScreen(
-                onNavigate = { navigateTo ->
-                    navHostController.navigate(navigateTo)
-                }
+//                onNavigate = { navigateTo ->
+//                    navHostController.navigate(navigateTo)
+//                }
             )
         }
         composable<Screen.FunnyJokesList> {
@@ -52,28 +65,23 @@ fun MainNav(
         }
         composable<Screen.About> {
             AboutScreen(
-                onNavigate = { navigateTo ->
-                    navHostController.navigate(navigateTo)
-                }
+//                onNavigate = { navigateTo ->
+//                    navHostController.navigate(navigateTo)
+//                }
             )
         }
         composable<Screen.Login> {
             LoginScreen(
-                onNavigate = { navigateTo ->
-                    navHostController.navigate(navigateTo)
-                }
+//                onNavigate = { navigateTo ->
+//                    navHostController.navigate(navigateTo)
+//                }
             )
         }
         composable<Screen.Register> {
-            RegisterScreen { navigateTo ->
-                navHostController.navigate(navigateTo)
-            }
+            RegisterScreen()
         }
         composable<Screen.Main> {
-            MainScreen { navigateTo ->
-                navHostController.navigate(navigateTo)
-            }
+            MainScreen()
         }
-
     }
 }

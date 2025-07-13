@@ -1,4 +1,4 @@
-package com.droiddevstar.newsapp.presentation.screen
+package com.droiddevstar.newsapp.presentation.screen.main_screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,15 +25,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.droiddevstar.newsapp.R
-import com.droiddevstar.newsapp.presentation.navigation.Screen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(
-    onNavigate: (Screen) -> Unit
-) {
+fun MainScreen() {
+    val viewModel: MainScreenViewModel = hiltViewModel<MainScreenViewModel>()
+
     val drawerState = rememberDrawerState(
         initialValue = DrawerValue.Closed
     )
@@ -57,7 +57,8 @@ fun MainScreen(
                                 close()
                             }
                         }
-                        onNavigate(Screen.About)
+
+                        viewModel.onAboutClick()
                     }
                 )
 
@@ -70,7 +71,7 @@ fun MainScreen(
                                 close()
                             }
                         }
-                        onNavigate(Screen.FunnyJokesCategories)
+//                        onNavigate(Screen.FunnyJokesCategories)
                     }
                 )
 

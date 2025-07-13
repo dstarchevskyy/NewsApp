@@ -16,6 +16,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.currentComposer
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
@@ -39,7 +40,6 @@ import com.droiddevstar.newsapp.util.Result
 
 @Composable
 fun LoginScreen(
-    onNavigate: (Screen) -> Unit
 ) {
     val viewModel: LoginScreenViewModel = hiltViewModel<LoginScreenViewModel>()
     val context: Context = LocalContext.current
@@ -48,7 +48,7 @@ fun LoginScreen(
         viewModel.state.loginResult?.let { loginResult ->
             when(loginResult) {
                 is Result.Success<*> -> {
-                    onNavigate(Screen.Main)
+                    Toast.makeText(context,  "Login successful", Toast.LENGTH_SHORT).show()
                 }
                 is Result.Failure<*> -> {
                     Toast.makeText(
@@ -61,18 +61,21 @@ fun LoginScreen(
     }
 
     LoginView(
-        state = viewModel.state,
-        onNavigate = onNavigate,
-        onEvent = viewModel::onEvent
+//        state = viewModel.state,
+        viewModel = viewModel,
+//        onNavigate = onNavigate,
+//        onEvent = viewModel::onEvent
     )
 }
 
 @Composable
 fun LoginView(
-    onNavigate: (Screen) -> Unit = {},
-    state: LoginScreenState = LoginScreenState(),
-    onEvent: (LoginScreenEvent) -> Unit = {}
+    viewModel: LoginScreenViewModel
+//    onNavigate: (Screen) -> Unit = {},
+//    state: LoginScreenState = LoginScreenState(),
+//    onEvent: (LoginScreenEvent) -> Unit = {}
 ) {
+    val state: LoginScreenState = viewModel.state
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -96,7 +99,7 @@ fun LoginView(
         OutlinedTextField(
             value = state.email,
             onValueChange = {
-                onEvent(LoginScreenEvent.EmailUpdated(newEmail = it))
+                viewModel.onEvent(LoginScreenEvent.EmailUpdated(newEmail = it))
             },
             leadingIcon = {
                 Icon(
@@ -114,7 +117,7 @@ fun LoginView(
         OutlinedTextField(
             value = state.password,
             onValueChange = {
-                onEvent(LoginScreenEvent.PasswordUpdated(newPassword = it))
+                viewModel.onEvent(LoginScreenEvent.PasswordUpdated(newPassword = it))
             },
             leadingIcon = {
                 Icon(
@@ -134,7 +137,7 @@ fun LoginView(
 
         StyledButton(
             onClick = {
-                onEvent(LoginScreenEvent.LoginBtnClick)
+                viewModel.onEvent(LoginScreenEvent.LoginBtnClick)
             },
             modifier = Modifier.padding(top = 50.dp)) {
             Text(
@@ -149,7 +152,7 @@ fun LoginView(
             modifier = Modifier
                 .padding(top = 20.dp)
                 .clickable {
-                    onNavigate(Screen.Register)
+                    viewModel.onRegisterClick()
                 }
         )
     }
@@ -158,5 +161,5 @@ fun LoginView(
 @Composable
 @Preview(showBackground = true)
 fun LoginScreenPreview() {
-    LoginView()
+    LoginView(viewModel = hiltViewModel())
 }
