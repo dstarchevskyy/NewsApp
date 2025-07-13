@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.droiddevstar.newsapp.domain.interactors.GetJokeCategoriesFlow
 import com.droiddevstar.newsapp.domain.interactors.LoadJokesCategories
 import com.droiddevstar.newsapp.domain.interactors.SaveSelectedJokeCategory
+import com.droiddevstar.newsapp.domain.interactors.navigation.SendNavigationCommand
+import com.droiddevstar.newsapp.presentation.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,6 +17,7 @@ import javax.inject.Inject
 class JokeCategoriesViewModel @Inject constructor(
     private val getJokeCategoriesFlow: GetJokeCategoriesFlow,
     private val saveSelectedJokeCategory: SaveSelectedJokeCategory,
+    private val sendNavigationCommand: SendNavigationCommand,
     loadJokesCategories: LoadJokesCategories
 ): ViewModel() {
 
@@ -35,7 +38,7 @@ class JokeCategoriesViewModel @Inject constructor(
     }
 
     fun onCategoryClick(category: String) {
-        println("@@@onCategoryClick: $category")
         saveSelectedJokeCategory(jokeCategory = category)
+        sendNavigationCommand(Screen.FunnyJokesList)
     }
 }

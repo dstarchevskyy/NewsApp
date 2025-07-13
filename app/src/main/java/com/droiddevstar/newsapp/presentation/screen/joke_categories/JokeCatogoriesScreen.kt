@@ -18,12 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.droiddevstar.newsapp.R
-import com.droiddevstar.newsapp.presentation.navigation.Screen
 
 @Composable
-fun JokeCategoriesScreen(
-//    onNavigate: (Screen) -> Unit
-) {
+fun JokeCategoriesScreen() {
     val viewModel: JokeCategoriesViewModel = hiltViewModel<JokeCategoriesViewModel>()
 
     val onCategoryClick: (String) -> Unit = { category ->
@@ -54,7 +51,6 @@ fun JokeCategoriesScreen(
                     modifier = Modifier.padding(16.dp)
                         .clickable {
                             onCategoryClick(category)
-//                            onNavigate(Screen.FunnyJokesList)
                         }
                 )
             }

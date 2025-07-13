@@ -63,29 +63,17 @@ fun MainNav(
         startDestination = Screen.Login
     ) {
         composable<Screen.FunnyJokesCategories> {
-            JokeCategoriesScreen(
-//                onNavigate = { navigateTo ->
-//                    navHostController.navigate(navigateTo)
-//                }
-            )
+            JokeCategoriesScreen()
         }
         composable<Screen.FunnyJokesList> {
             JokesListScreen(
             )
         }
         composable<Screen.About> {
-            AboutScreen(
-//                onNavigate = { navigateTo ->
-//                    navHostController.navigate(navigateTo)
-//                }
-            )
+            AboutScreen()
         }
         composable<Screen.Login> {
-            LoginScreen(
-//                onNavigate = { navigateTo ->
-//                    navHostController.navigate(navigateTo)
-//                }
-            )
+            LoginScreen()
         }
         composable<Screen.Register> {
             RegisterScreen()
