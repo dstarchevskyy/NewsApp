@@ -8,13 +8,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.droiddevstar.newsapp.domain.interactors.navigation.SendNavigationCommand
+import com.droiddevstar.newsapp.presentation.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AboutViewModel @Inject constructor(): ViewModel() {
+class AboutViewModel @Inject constructor(
+    private val sendNavigationCommand: SendNavigationCommand
+): ViewModel() {
     var state: Boolean by mutableStateOf(false)
         private set
 
@@ -55,5 +59,9 @@ class AboutViewModel @Inject constructor(): ViewModel() {
             val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/id27741388"))
             context.startActivity(webIntent)
         }
+    }
+
+    fun onCloseClick() {
+        sendNavigationCommand(Screen.NavigateBack)
     }
 }

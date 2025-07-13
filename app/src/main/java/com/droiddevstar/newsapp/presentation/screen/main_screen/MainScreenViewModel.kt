@@ -10,7 +10,12 @@ import javax.inject.Inject
 class MainScreenViewModel @Inject constructor(
     private val sendNavigationCommand: SendNavigationCommand
 ) : ViewModel() {
-    fun onAboutClick() {
+    fun onAboutItemClick() {
         sendNavigationCommand(Screen.About)
     }
+
+    fun onFunnyJokesItemClick() {
+        sendNavigationCommand(Screen.FunnyJokesCategories)
+    }
+
 }

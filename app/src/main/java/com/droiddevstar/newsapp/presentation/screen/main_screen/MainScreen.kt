@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -34,7 +35,7 @@ import kotlinx.coroutines.launch
 fun MainScreen() {
     val viewModel: MainScreenViewModel = hiltViewModel<MainScreenViewModel>()
 
-    val drawerState = rememberDrawerState(
+    val drawerState: DrawerState = rememberDrawerState(
         initialValue = DrawerValue.Closed
     )
     val scope = rememberCoroutineScope()
@@ -58,7 +59,7 @@ fun MainScreen() {
                             }
                         }
 
-                        viewModel.onAboutClick()
+                        viewModel.onAboutItemClick()
                     }
                 )
 
@@ -71,10 +72,10 @@ fun MainScreen() {
                                 close()
                             }
                         }
-//                        onNavigate(Screen.FunnyJokesCategories)
+
+                        viewModel.onFunnyJokesItemClick()
                     }
                 )
-
             }
         }
     ) {
@@ -111,7 +112,6 @@ fun MainScreen() {
                         fontSize = 20.sp
                     )
                 }
-
             }
         )
     }

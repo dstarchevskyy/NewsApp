@@ -153,7 +153,7 @@ fun AboutScreen(
 
         StyledButton(
             onClick = {
-//                onNavigate(Screen.Main)
+                viewModel.onCloseClick()
             },
             modifier = Modifier.padding(top = 16.dp)
         ) {

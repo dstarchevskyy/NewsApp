@@ -29,6 +29,8 @@ sealed class Screen {
     data object FunnyJokesCategories: Screen()
     @Serializable
     data object FunnyJokesList: Screen()
+    @Serializable
+    data object NavigateBack: Screen()
 }
 
 @Composable
@@ -41,8 +43,16 @@ fun MainNav(
         navigationViewModel
     ) {
         navigationViewModel.navigationCommandsFlow.collect { screen ->
-            navHostController.navigate(screen) {
-                launchSingleTop = true
+            when (screen) {
+                Screen.NavigateBack -> {
+                    navHostController.popBackStack()
+                }
+
+                else -> {
+                    navHostController.navigate(screen) {
+                        launchSingleTop = true
+                    }
+                }
             }
         }
     }
