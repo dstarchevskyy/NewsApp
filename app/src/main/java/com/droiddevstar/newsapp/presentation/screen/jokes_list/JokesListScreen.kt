@@ -1,12 +1,16 @@
 package com.droiddevstar.newsapp.presentation.screen.jokes_list
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -15,19 +19,23 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.rememberAsyncImagePainter
 import com.droiddevstar.newsapp.R
 import com.droiddevstar.newsapp.domain.model.JokeModel
 
@@ -73,6 +81,7 @@ fun JokesListScreen() {
             items(jokesState.value) { jokeModel ->
                 Card(modifier = Modifier.fillMaxWidth()
                     .clickable {
+                        viewModel.onJokeClick(jokeModel)
                         showBottomSheet = true
                     }) {
                     Text(
@@ -92,7 +101,43 @@ fun JokesListScreen() {
             },
             sheetState = bottomSheetState
         ) {
-            Text(text = "Title")
+            Card(
+                modifier = Modifier.padding(horizontal = 16.dp)
+            ) {
+                val jokeModel: JokeModel = viewModel.selectedJoke.value ?: return@Card
+
+                Column {
+                    Text(
+                        text = jokeModel.value ?: "",
+                        fontSize = 20.sp,
+                        fontStyle = FontStyle.Italic,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter  = rememberAsyncImagePainter(
+                        model = jokeModel.iconUrl,
+                        placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
+                        error = rememberVectorPainter(image = Icons.Outlined.Clear)
+                        ),
+                        contentDescription = "Icon"
+                    )
+
+                    Text(
+                        text = jokeModel.createdAt,
+                        fontSize = 20.sp,
+                        fontStyle = FontStyle.Italic,
+                        modifier = Modifier.padding(16.dp)
+                    )
+
+                }
+            }
         }
     }
 }

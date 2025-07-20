@@ -82,4 +82,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     implementation(libs.chucker)
+
+    implementation("io.coil-kt:coil-compose:2.4.0")
 }
