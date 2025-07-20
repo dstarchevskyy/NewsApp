@@ -1,5 +1,6 @@
 package com.droiddevstar.newsapp.domain.jokes_repository
 
+import com.droiddevstar.newsapp.domain.model.JokeModel
 import kotlinx.coroutines.flow.StateFlow
 
 interface JokesRepository {
@@ -12,5 +13,5 @@ interface JokesRepository {
     fun saveSelectedJokeCategory(category: String)
     fun getSelectedJokeCategoryFlow(): StateFlow<String?>
 
-    fun getSavedJokesFlow(): StateFlow<List<String>>
+    fun getSavedJokesFlow(): StateFlow<List<JokeModel>>
 }

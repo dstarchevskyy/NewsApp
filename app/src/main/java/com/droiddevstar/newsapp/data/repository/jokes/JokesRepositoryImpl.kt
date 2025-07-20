@@ -1,8 +1,10 @@
 package com.droiddevstar.newsapp.data.repository.jokes
 
+import com.droiddevstar.newsapp.data.mapper.JokeDTOtoJokeModel.jokeDTOtoJokeModel
 import com.droiddevstar.newsapp.data.network.ChuckNorrisApiService
 import com.droiddevstar.newsapp.data.network.JokeDTO
 import com.droiddevstar.newsapp.domain.jokes_repository.JokesRepository
+import com.droiddevstar.newsapp.domain.model.JokeModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
@@ -29,8 +31,9 @@ class JokesRepositoryImpl @Inject constructor(
                 category = selectedCategory
             )
 
-            JokesCache.saveLoadedJoke(jokeText = jokeDTO?.value ?: return@launch)
-            println("@@@response: $jokeDTO")
+            val jokeModel: JokeModel = jokeDTOtoJokeModel(jokeDto = jokeDTO)
+
+            JokesCache.saveLoadedJoke(jokeModel)
         }
     }
 
@@ -50,7 +53,7 @@ class JokesRepositoryImpl @Inject constructor(
         return JokesCache.getSelectedJokeCategoryFlow()
     }
 
-    override fun getSavedJokesFlow(): StateFlow<List<String>> {
+    override fun getSavedJokesFlow(): StateFlow<List<JokeModel>> {
         return JokesCache.getSavedJokesFlow()
     }
 }

@@ -3,6 +3,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.droiddevstar.newsapp.domain.interactors.GetSavedJokesFlow
 import com.droiddevstar.newsapp.domain.interactors.LoadJokesBySelectedCategory
+import com.droiddevstar.newsapp.domain.model.JokeModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +16,7 @@ class JokesListViewModel @Inject constructor(
     private val getSavedJokesFlow: GetSavedJokesFlow
 ) : ViewModel() {
 
-    private val _jokesFlow: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
+    private val _jokesFlow: MutableStateFlow<List<JokeModel>> = MutableStateFlow(emptyList())
     val jokesFlow = _jokesFlow.asStateFlow()
 
     init {

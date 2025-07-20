@@ -1,5 +1,6 @@
 package com.droiddevstar.newsapp.data.repository.jokes
 
+import com.droiddevstar.newsapp.domain.model.JokeModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -7,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 object JokesCache {
     private val jokeCategoriesFlow: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
     private val selectedJokeCategoryFlow: MutableStateFlow<String?> = MutableStateFlow(null)
-    private val loadedJokesFlow: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
+    private val loadedJokesFlow: MutableStateFlow<List<JokeModel>> = MutableStateFlow(emptyList())
 
     fun saveJokeCategories(categories: List<String>) {
         jokeCategoriesFlow.value = categories
@@ -25,15 +26,15 @@ object JokesCache {
         return selectedJokeCategoryFlow.asStateFlow()
     }
 
-    fun saveLoadedJoke(jokeText: String) {
-        val currentJokesList: List<String> = loadedJokesFlow.value
-        val newList = currentJokesList.toMutableList().apply {
-            add(jokeText)
+    fun saveLoadedJoke(jokeModel: JokeModel) {
+        val currentJokesList: List<JokeModel> = loadedJokesFlow.value
+        val newList: MutableList<JokeModel> = currentJokesList.toMutableList().apply {
+            add(jokeModel)
         }
         loadedJokesFlow.value = newList
     }
 
-    fun getSavedJokesFlow(): StateFlow<List<String>> {
+    fun getSavedJokesFlow(): StateFlow<List<JokeModel>> {
         return loadedJokesFlow.asStateFlow()
     }
 }
