@@ -38,6 +38,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.droiddevstar.newsapp.R
 import com.droiddevstar.newsapp.domain.model.JokeModel
+import com.droiddevstar.newsapp.util.DateTimeUtil.Companion.formatDateTimeToHumanReadable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -130,7 +131,7 @@ fun JokesListScreen() {
                     )
 
                     Text(
-                        text = jokeModel.createdAt,
+                        text = formatDateTimeToHumanReadable(jokeModel.createdAt) ?: "",
                         fontSize = 20.sp,
                         fontStyle = FontStyle.Italic,
                         modifier = Modifier.padding(16.dp)
