@@ -109,6 +109,12 @@ fun AboutScreen() {
                 .align(Alignment.TopStart)
             )
 
+            EyeView(modifier = Modifier
+                .fillMaxWidth(0.485f)
+                .fillMaxHeight(0.109f)
+                .align(Alignment.TopStart)
+            )
+
         }
 
         Row(modifier = Modifier
