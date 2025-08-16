@@ -19,14 +19,20 @@ import javax.inject.Inject
 class AboutViewModel @Inject constructor(
     private val sendNavigationCommand: SendNavigationCommand
 ): ViewModel() {
-    var state: Boolean by mutableStateOf(false)
+    var balabanovTextAlpha: Boolean by mutableStateOf(false)
+        private set
+
+    var isEyesVisible: Boolean by mutableStateOf(false)
+        private set
+
+    var side: Side? by mutableStateOf(null)
         private set
 
     fun addMem() {
         viewModelScope.launch {
-            state = true
+            balabanovTextAlpha = true
             delay(3_000)
-            state = false
+            balabanovTextAlpha = false
         }
     }
 
@@ -63,5 +69,13 @@ class AboutViewModel @Inject constructor(
 
     fun onCloseClick() {
         sendNavigationCommand(Screen.NavigateBack)
+    }
+
+    fun showEyes() {
+        isEyesVisible = true
+    }
+
+    fun onTap(side: Side) {
+        this.side = side
     }
 }

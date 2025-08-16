@@ -9,6 +9,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -66,8 +68,23 @@ fun AboutScreen() {
 
         Box(
             modifier = Modifier.fillMaxWidth()
-                .background(color = Color.LightGray),
-            contentAlignment = Alignment.Center
+                .background(color = Color.LightGray)
+                .pointerInput(Unit) {
+                    detectTapGestures { offset ->
+                        val width = this.size.width
+                        val middleX = width / 2
+                        val side: Side = if (offset.x > middleX) {
+                            Side.RIGHT_SIDE
+                        } else {
+                            Side.LEFT_SIDE
+                        }
+                        viewModel.onTap(side)
+
+                    }
+                },
+
+            contentAlignment = Alignment.Center,
+
         ) {
             Image(
                 modifier = Modifier.fillMaxWidth()
@@ -77,8 +94,8 @@ fun AboutScreen() {
                 contentScale = ContentScale.FillWidth
             )
 
-            val alpha by animateFloatAsState(
-                targetValue = if (viewModel.state) {
+            val alpha: Float by animateFloatAsState(
+                targetValue = if (viewModel.balabanovTextAlpha) {
                     1f
                 } else {
                     0f
@@ -87,7 +104,7 @@ fun AboutScreen() {
             )
 
             this@Column.AnimatedVisibility(
-                visible = viewModel.state,
+                visible = viewModel.balabanovTextAlpha,
                 enter = fadeIn(
                     animationSpec = tween(delayMillis = 2_000)
                 ),
@@ -101,17 +118,31 @@ fun AboutScreen() {
                 )
             }
 
-            EyeView(modifier = Modifier
-                .fillMaxWidth(0.525f)
-                .fillMaxHeight(0.11f)
-                .align(Alignment.TopStart)
-            )
+            this@Column.AnimatedVisibility(
+                visible = viewModel.isEyesVisible,
+                enter = fadeIn(
+                    animationSpec = tween(delayMillis = 2_000)
+                ),
+                exit = fadeOut(
+                    animationSpec = tween(delayMillis = 2_000)
+                )
+            ) {
+                EyeView(
+                    modifier = Modifier
+                        .fillMaxWidth(0.525f)
+                        .fillMaxHeight(0.11f)
+                        .align(Alignment.TopStart),
+                    side = viewModel.side
+                )
 
-            EyeView(modifier = Modifier
-                .fillMaxWidth(0.485f)
-                .fillMaxHeight(0.109f)
-                .align(Alignment.TopStart)
-            )
+                EyeView(
+                    modifier = Modifier
+                        .fillMaxWidth(0.485f)
+                        .fillMaxHeight(0.109f)
+                        .align(Alignment.TopStart),
+                    side = viewModel.side
+                )
+            }
         }
 
         Row(modifier = Modifier
@@ -174,7 +205,7 @@ fun AboutScreen() {
 
         StyledButton(
             onClick = {
-
+                viewModel.showEyes()
             },
             modifier = Modifier.padding(top = 16.dp)
         ) {
