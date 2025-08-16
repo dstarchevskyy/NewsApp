@@ -137,8 +137,6 @@ fun AboutScreen() {
                     modifier = Modifier.offset((-2).dp, (-55).dp)
                 ) {
                 EyeView(
-//                    modifier = Modifier
-//                        .offset(70.dp, (-18).dp),
                     side = viewModel.side
                 )
 
@@ -147,9 +145,8 @@ fun AboutScreen() {
                         .padding(start = 5.dp),
                     side = viewModel.side
                 )
-
-}            }
-
+                }
+            }
         }
 
         Row(modifier = Modifier
