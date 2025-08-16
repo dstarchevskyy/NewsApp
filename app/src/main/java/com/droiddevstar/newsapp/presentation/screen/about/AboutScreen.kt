@@ -1,6 +1,5 @@
 package com.droiddevstar.newsapp.presentation.screen.about
 
-import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -23,10 +22,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.Placeable
-import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -114,7 +112,6 @@ fun AboutScreen() {
                 .fillMaxHeight(0.109f)
                 .align(Alignment.TopStart)
             )
-
         }
 
         Row(modifier = Modifier
@@ -157,13 +154,12 @@ fun AboutScreen() {
             onClick = {
                 viewModel.addMem()
             },
-            modifier = Modifier.padding(top = 100.dp)
+            modifier = Modifier.padding(top = 20.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.add_mem)
             )
         }
-
 
         StyledButton(
             onClick = {
@@ -175,18 +171,25 @@ fun AboutScreen() {
                 text = stringResource(id = R.string.close)
             )
         }
+
+        StyledButton(
+            onClick = {
+
+            },
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(id = R.string.show_eyes),
+                    modifier = Modifier.padding(end = 6.dp)
+                )
+                EyeView()
+                EyeView()
+            }
+        }
+
     }
 }
 
-@SuppressLint("SuspiciousModifierThen")
-fun Modifier.fractionalPosition(xFraction: Float, yFraction: Float) = this.then(
-    layout { measurable, constraints ->
-        val placeable: Placeable = measurable.measure(constraints)
-        layout(placeable.width, placeable.height) {
-            placeable.placeRelative(
-                x = (constraints.maxWidth * xFraction - placeable.width / 2).toInt().coerceAtLeast(0),
-                y = (constraints.maxHeight * yFraction - placeable.height / 2).toInt().coerceAtLeast(0)
-            )
-        }
-    }
-)
