@@ -39,9 +39,7 @@ import com.droiddevstar.newsapp.R
 import com.droiddevstar.newsapp.presentation.ui.component.StyledButton
 
 @Composable
-fun AboutScreen(
-//    onNavigate: (Screen) -> Unit
-) {
+fun AboutScreen() {
     val viewModel: AboutViewModel = hiltViewModel<AboutViewModel>()
     val context: Context = LocalContext.current
 
@@ -106,8 +104,8 @@ fun AboutScreen(
             }
 
             EyeView(modifier = Modifier
-                .fillMaxWidth(0.5f)
-                .fillMaxHeight(0.3f)
+                .fillMaxWidth(0.525f)
+                .fillMaxHeight(0.11f)
                 .align(Alignment.TopStart)
             )
 

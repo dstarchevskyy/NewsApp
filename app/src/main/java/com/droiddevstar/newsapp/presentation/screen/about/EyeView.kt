@@ -21,9 +21,6 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun EyeView(
     modifier: Modifier = Modifier,
-    fillColor: Color = Color.White,
-    outlineColor: Color = Color.Black,
-    outlineWidth: Float = 2f
 ) {
     Box(modifier = modifier,
         contentAlignment = Alignment.BottomEnd) {
