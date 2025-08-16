@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -67,7 +69,8 @@ fun AboutScreen() {
         )
 
         Box(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .background(color = Color.LightGray)
                 .pointerInput(Unit) {
                     detectTapGestures { offset ->
@@ -87,7 +90,8 @@ fun AboutScreen() {
 
         ) {
             Image(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(top = 16.dp),
                 painter = painterResource(R.drawable.dima_photo),
                 contentDescription = "Dima photo",
@@ -113,12 +117,14 @@ fun AboutScreen() {
                 )
             ) {
                 BalabanovView(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .alpha(alpha)
                 )
             }
 
             this@Column.AnimatedVisibility(
+                modifier = Modifier.background(color = Color.Red),
                 visible = viewModel.isEyesVisible,
                 enter = fadeIn(
                     animationSpec = tween(delayMillis = 2_000)
@@ -127,22 +133,23 @@ fun AboutScreen() {
                     animationSpec = tween(delayMillis = 2_000)
                 )
             ) {
+                Row(
+                    modifier = Modifier.offset((-2).dp, (-55).dp)
+                ) {
                 EyeView(
-                    modifier = Modifier
-                        .fillMaxWidth(0.525f)
-                        .fillMaxHeight(0.11f)
-                        .align(Alignment.TopStart),
+//                    modifier = Modifier
+//                        .offset(70.dp, (-18).dp),
                     side = viewModel.side
                 )
 
                 EyeView(
                     modifier = Modifier
-                        .fillMaxWidth(0.485f)
-                        .fillMaxHeight(0.109f)
-                        .align(Alignment.TopStart),
+                        .padding(start = 5.dp),
                     side = viewModel.side
                 )
-            }
+
+}            }
+
         }
 
         Row(modifier = Modifier
@@ -216,8 +223,8 @@ fun AboutScreen() {
                     text = stringResource(id = R.string.show_eyes),
                     modifier = Modifier.padding(end = 6.dp)
                 )
-                EyeView()
-                EyeView()
+                EyeView(side = viewModel.side)
+                EyeView(side = viewModel.side)
             }
         }
 
