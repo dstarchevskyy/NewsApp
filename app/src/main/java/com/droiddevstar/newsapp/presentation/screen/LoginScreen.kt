@@ -61,19 +61,13 @@ fun LoginScreen(
     }
 
     LoginView(
-//        state = viewModel.state,
         viewModel = viewModel,
-//        onNavigate = onNavigate,
-//        onEvent = viewModel::onEvent
     )
 }
 
 @Composable
 fun LoginView(
     viewModel: LoginScreenViewModel
-//    onNavigate: (Screen) -> Unit = {},
-//    state: LoginScreenState = LoginScreenState(),
-//    onEvent: (LoginScreenEvent) -> Unit = {}
 ) {
     val state: LoginScreenState = viewModel.state
     Column(

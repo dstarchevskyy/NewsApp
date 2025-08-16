@@ -1,5 +1,6 @@
 package com.droiddevstar.newsapp.presentation.screen.about
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -12,6 +13,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,6 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.Placeable
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,7 +36,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.droiddevstar.newsapp.R
-import com.droiddevstar.newsapp.presentation.navigation.Screen
 import com.droiddevstar.newsapp.presentation.ui.component.StyledButton
 
 @Composable
@@ -101,6 +104,13 @@ fun AboutScreen(
                         .alpha(alpha)
                 )
             }
+
+            EyeView(modifier = Modifier
+                .fillMaxWidth(0.5f)
+                .fillMaxHeight(0.3f)
+                .align(Alignment.TopStart)
+            )
+
         }
 
         Row(modifier = Modifier
@@ -163,3 +173,16 @@ fun AboutScreen(
         }
     }
 }
+
+@SuppressLint("SuspiciousModifierThen")
+fun Modifier.fractionalPosition(xFraction: Float, yFraction: Float) = this.then(
+    layout { measurable, constraints ->
+        val placeable: Placeable = measurable.measure(constraints)
+        layout(placeable.width, placeable.height) {
+            placeable.placeRelative(
+                x = (constraints.maxWidth * xFraction - placeable.width / 2).toInt().coerceAtLeast(0),
+                y = (constraints.maxHeight * yFraction - placeable.height / 2).toInt().coerceAtLeast(0)
+            )
+        }
+    }
+)

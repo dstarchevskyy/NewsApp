@@ -136,7 +136,6 @@ fun JokesListScreen() {
                         fontStyle = FontStyle.Italic,
                         modifier = Modifier.padding(16.dp)
                     )
-
                 }
             }
         }

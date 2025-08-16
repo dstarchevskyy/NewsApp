@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,7 +22,7 @@ fun StyledButton(
         onClick = onClick,
         shape = RoundedCornerShape(size = 15.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Black
+            containerColor = MaterialTheme.colorScheme.primary
         )
     ) {
         Box(
