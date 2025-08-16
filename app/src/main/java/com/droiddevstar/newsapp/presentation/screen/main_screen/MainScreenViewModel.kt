@@ -18,4 +18,8 @@ class MainScreenViewModel @Inject constructor(
         sendNavigationCommand(Screen.FunnyJokesCategories)
     }
 
+    fun onGameItemClick() {
+        sendNavigationCommand(Screen.Game)
+    }
+
 }

@@ -48,6 +48,21 @@ fun MainScreen() {
                     text = stringResource(id = R.string.app_name),
                     modifier = Modifier.padding(16.dp)
                 )
+
+                HorizontalDivider()
+                NavigationDrawerItem(
+                    label = { Text(text = stringResource(R.string.game)) },
+                    selected = false,
+                    onClick = {
+                        scope.launch {
+                            drawerState.apply {
+                                close()
+                            }
+                        }
+
+                        viewModel.onGameItemClick()
+                    }
+                )
                 HorizontalDivider()
                 NavigationDrawerItem(
                     label = { Text(text = stringResource(R.string.about)) },
