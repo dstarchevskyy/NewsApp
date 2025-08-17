@@ -1,6 +1,7 @@
 package com.droiddevstar.newsapp.presentation.screen.main_screen
 
 import androidx.lifecycle.ViewModel
+import com.droiddevstar.newsapp.domain.interactors.dark_theme.SetIsDarkTheme
 import com.droiddevstar.newsapp.domain.interactors.navigation.SendNavigationCommand
 import com.droiddevstar.newsapp.presentation.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,6 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
+    private val setIsDarkTheme: SetIsDarkTheme,
     private val sendNavigationCommand: SendNavigationCommand
 ) : ViewModel() {
 
@@ -31,6 +33,7 @@ class MainScreenViewModel @Inject constructor(
 
     fun onDarkThemeChange() {
         _isDarkTheme.value = !isDarkTheme.value
+        setIsDarkTheme(isDarkTheme.value)
     }
 
 }

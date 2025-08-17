@@ -1,16 +1,26 @@
 package com.droiddevstar.newsapp.ui
 
-import androidx.compose.runtime.MutableIntState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.droiddevstar.newsapp.domain.interactors.dark_theme.GetIsDarkThemeFlow
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainActivityViewModel : ViewModel() {
-    private val _counterState: MutableIntState = mutableIntStateOf(0)
-    var counterState: Int by _counterState
+@HiltViewModel
+class MainActivityViewModel @Inject constructor(
+    private val getIsDarkThemeFlow: GetIsDarkThemeFlow
+): ViewModel() {
+    private val _isDarkTheme: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isDarkTheme: StateFlow<Boolean> = _isDarkTheme
 
-    fun incrementCounter() {
-        _counterState.intValue++
+    init {
+        viewModelScope.launch {
+            getIsDarkThemeFlow().collect {
+                _isDarkTheme.value = it
+            }
+        }
     }
 }
