@@ -9,6 +9,8 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun GameScreen() {
+
+
     Text(modifier = Modifier.background(color = Color.Red), text = "GameScreen")
 
 }

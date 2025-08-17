@@ -110,10 +110,10 @@ fun AboutScreen() {
             this@Column.AnimatedVisibility(
                 visible = viewModel.balabanovTextAlpha,
                 enter = fadeIn(
-                    animationSpec = tween(delayMillis = 2_000)
+                    animationSpec = tween(delayMillis = 1_000)
                 ),
                 exit = fadeOut(
-                    animationSpec = tween(delayMillis = 2_000)
+                    animationSpec = tween(delayMillis = 1_000)
                 )
             ) {
                 BalabanovView(
@@ -124,13 +124,12 @@ fun AboutScreen() {
             }
 
             this@Column.AnimatedVisibility(
-                modifier = Modifier.background(color = Color.Red),
                 visible = viewModel.isEyesVisible,
                 enter = fadeIn(
-                    animationSpec = tween(delayMillis = 2_000)
+                    animationSpec = tween(delayMillis = 1_000)
                 ),
                 exit = fadeOut(
-                    animationSpec = tween(delayMillis = 2_000)
+                    animationSpec = tween(delayMillis = 1_000)
                 )
             ) {
                 Row(
