@@ -1,7 +1,6 @@
 package com.droiddevstar.newsapp.presentation.screen.game
 
 import android.content.res.Configuration
-import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.TweenSpec
@@ -16,13 +15,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.droiddevstar.newsapp.presentation.ui.component.StyledButton
 import kotlinx.coroutines.CoroutineScope
@@ -30,13 +34,37 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun GameScreen() {
-    val screenSize: ScreenSize = rememberScreenSize()
+    val screenData: MutableState<ScreenData> = remember {
+        mutableStateOf(ScreenData())
+    }
 
-    println("@@@screenSize: ${screenSize}")
+    val configuration: Configuration = LocalConfiguration.current
+    val density: Density = LocalDensity.current
+
+    LaunchedEffect(key1 = LocalConfiguration.current) {
+        val screenWidth: Dp = configuration.screenWidthDp.dp
+        val screenHeight: Dp = configuration.screenHeightDp.dp
+
+        val screenWidthPx: Float = with(density) { screenWidth.toPx() }
+        val screenHeightPx: Float = with(density) { screenHeight.toPx() }
+        val squareSizePx: Float = with(density) { SQUARE_SIZE_DP.dp.toPx()}
+        val horizontalPaddingPx: Float = with(density) { PADDING_HORIZONTAL_DP.dp.toPx()}
+        
+        screenData.value = ScreenData(
+            widthPx = screenWidthPx,
+            heightPx = screenHeightPx,
+            squareSizePx = squareSizePx,
+            horizontalPaddingPx = horizontalPaddingPx
+        )
+    }
 
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
 
-    val offsetX: Animatable<Float, AnimationVector1D> = remember {
+    val offsetXPx: Animatable<Float, AnimationVector1D> = remember {
+        Animatable(0f)
+    }
+
+    val offsetYPx: Animatable<Float, AnimationVector1D> = remember {
         Animatable(0f)
     }
 
@@ -51,10 +79,12 @@ fun GameScreen() {
                 vertical = 28.dp,
                 horizontal = PADDING_HORIZONTAL_DP.dp
                 )
-                .offset(
-                    x = offsetX.value.dp,
-                    y = 0.dp
-                )
+                .offset {
+                    IntOffset(
+                        x = offsetXPx.value.toInt(),
+                        y = offsetYPx.value.toInt()
+                    )
+                }
                 .size(50.dp)
                 .background(color = MaterialTheme.colorScheme.onBackground)
         )
@@ -68,7 +98,7 @@ fun GameScreen() {
                     .padding(bottom = SQUARE_SIZE_DP.dp),
                 onClick = {
                     coroutineScope.launch {
-                        offsetX.animateTo(
+                        offsetXPx.animateTo(
                             targetValue = 0f,
                             animationSpec = TweenSpec(),
                         )
@@ -83,8 +113,8 @@ fun GameScreen() {
                     .padding(bottom = SQUARE_SIZE_DP.dp),
                 onClick = {
                     coroutineScope.launch {
-                        offsetX.animateTo(
-                            targetValue = screenSize.widthDp.value - SQUARE_SIZE_DP - (PADDING_HORIZONTAL_DP * 2),
+                        offsetXPx.animateTo(
+                            targetValue = screenData.value.widthPx - screenData.value.squareSizePx - screenData.value.horizontalPaddingPx * 2,
                             animationSpec = TweenSpec(),
                         )
                     }
@@ -94,18 +124,6 @@ fun GameScreen() {
             }
 
         }
-    }
-}
-
-@Composable
-fun rememberScreenSize(): ScreenSize {
-    val configuration: Configuration = LocalConfiguration.current
-
-    return remember(configuration) {
-        ScreenSize(
-            widthDp = configuration.screenWidthDp.dp,
-            heightDp = configuration.screenHeightDp.dp
-        )
     }
 }
 
