@@ -1,5 +1,7 @@
 package com.droiddevstar.newsapp
 
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,6 +28,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        registerReceiver(BatteryInfoReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+
         enableEdgeToEdge()
         setContent {
             val viewModel: MainActivityViewModel = hiltViewModel<MainActivityViewModel>()
